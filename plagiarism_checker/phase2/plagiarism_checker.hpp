@@ -1,62 +1,53 @@
-#ifndef PLAGIARISM_CHECKER_HPP
-#define PLAGIARISM_CHECKER_HPP
-
-#include <memory>
+#include "structures.hpp"
+// -----------------------------------------------------------------------------
 #include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include <deque>
-#include <queue>
+#include <cmath> // check
+#include <map>
+#include <chrono>
+#include <string>
+#include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <thread>
-#include "structures.hpp"
+#include <queue>
+//---------------------
+#include <iostream>
 
-// Helper class for rolling hash computation
-class RollingHash {
-public:
-    RollingHash(int base, int mod);
-    void add_token(int token);
-    int get_hash() const;
-    void set_window_size(int size);
+// You are free to add any STL includes above this comment, below the --line--.
+// DO NOT add "using namespace std;" or include any other files/libraries.
+// Also DO NOT add the include "bits/stdc++.h"
 
-private:
-    int base, mod, hash = 0, base_power = 1, window_size = 0;
-    std::deque<int> tokens;
-};
+// OPTIONAL: Add your helper functions and classes here
 
-// Plagiarism Checker Class
 class plagiarism_checker_t {
+    // You should NOT modify the public interface of this class.
 public:
-    plagiarism_checker_t();
-    plagiarism_checker_t(std::vector<std::shared_ptr<submission_t>> __submissions);
-    ~plagiarism_checker_t();
-
+    plagiarism_checker_t(void);
+    plagiarism_checker_t(std::vector<std::shared_ptr<submission_t>> 
+                            __submissions);
+    ~plagiarism_checker_t(void);
     void add_submission(std::shared_ptr<submission_t> __submission);
 
 protected:
-    struct submission_data_t {
-        std::shared_ptr<submission_t> submission;
-        std::vector<int> tokens;
-    };
+    // TODO: Add members and function signatures here
+    std::chrono::time_point<std::chrono::steady_clock> initial_time;
 
-    std::queue<submission_data_t> submissions; // Queue for new submissions
-    std::unordered_map<int, std::unordered_set<std::shared_ptr<submission_t>>> pattern_store_75; // Exact match store
-    std::unordered_map<int, std::unordered_set<std::shared_ptr<submission_t>>> pattern_store_15; // Patchwork match store
-    std::mutex mutex; // Protect shared data
-    std::condition_variable cv; // Condition variable for worker thread
-    std::atomic<bool> stop_worker; // Stop signal for worker thread
-    std::thread worker_thread; // Background thread
+    std::vector<long long int> rolling_hash(std::vector<int> &input, int window_length);
+    std::map<long long int, std::vector<long int>> map_75_hashes;
+    std::map<long long int, std::vector<long int>> map_15_hashes;
+    std::map<long, double> submission_times;
+    std::map<long, std::shared_ptr<submission_t>> submission_id_to_ptr;
+    void add_new_hash(std::vector<long long int> & input_hashes, long submission_id, std::map<long long int, std::vector<long>> & map_of_hash_values);
+    bool exact75_check(long current_submission_id, std::vector<long long int> & input_hashes, std::map<long long int, std::vector<long>> & map_of_hash_values);
+    bool exact15_check(long current_submission_id, std::vector<long long int> & input_hashes, std::map<long long int, std::vector<long>> & map_of_hash_values);
 
-    const int BASE = 257;        // Rolling hash base
-    const int MOD = 1000000007;  // Rolling hash modulus
-    const int WINDOW_75 = 75;    // Length for exact match
-    const int WINDOW_15 = 15;    // Length for patchwork match
+    // threading stuff
+    std::mutex mtx;
 
-    void process_flags(); // Worker thread function
-    void check_plagiarism(const submission_data_t& data);
-    void flag_submission(std::shared_ptr<submission_t> submission);
+    std::thread worker;
+    std::queue<std::shared_ptr<submission_t>> sub_queue;
+    bool stop;
+    std::condition_variable cv;
+
+    void handle_submission();
+    // End TODO
 };
-
-#endif // PLAGIARISM_CHECKER_HPP
-
