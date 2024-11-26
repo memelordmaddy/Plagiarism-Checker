@@ -69,7 +69,7 @@ bool plagiarism_checker_t:: exact75_check(long current_submission_id, std::vecto
                     if(submission_id_to_ptr[previous_submission_id]->professor)
                         submission_id_to_ptr[previous_submission_id]->professor->flag_professor(submission_id_to_ptr[previous_submission_id]);
                 
-                    //std::cerr << "Match of length 75 with previous submission id :" << previous_submission_id << std::endl;
+                    std::cerr << "Match of length 75 with previous submission id :" << previous_submission_id << std::endl;
                 }
             }
 
@@ -79,7 +79,7 @@ bool plagiarism_checker_t:: exact75_check(long current_submission_id, std::vecto
             if(submission_id_to_ptr[current_submission_id]->professor)
                 submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
             
-            //std::cerr << "Match of length 75 with submission id : " << current_submission_id << std::endl;
+            std::cerr << "Match of length 75 with submission id : " << current_submission_id << std::endl;
             return true; 
         }
     }
@@ -107,7 +107,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                     submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
                 
                 // debugging
-                //std::cerr << "Patchwork plag detected with id " << current_submission_id << std::endl;
+                std::cerr << "Patchwork plag detected with id " << current_submission_id << std::endl;
                 
                 return true;
             }
@@ -129,7 +129,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                         if(submission_id_to_ptr[previous_submission_id]->professor)
                             submission_id_to_ptr[previous_submission_id]->professor->flag_professor(submission_id_to_ptr[previous_submission_id]);
 
-                        //std::cerr << "Flagged previous submission for copies from same file " << previous_submission_id << std::endl;
+                        std::cerr << "Flagged previous submission for copies from same file " << previous_submission_id << std::endl;
                     }
                     flagged[current_submission_id] = true;
                     if(submission_id_to_ptr[current_submission_id]->student)
@@ -137,7 +137,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                     if(submission_id_to_ptr[current_submission_id]->professor)
                         submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
 
-                    //std::cerr << "Flagged submission with id " << current_submission_id << " for copies from same file." << std::endl;
+                    std::cerr << "Flagged submission with id " << current_submission_id << " for copies from same file." << std::endl;
                     return true;
                 }
             }
@@ -189,7 +189,7 @@ plagiarism_checker_t:: ~plagiarism_checker_t()
 {
     // for(int i=0; i<submission_times.size(); i++)
     // {
-    //     //std::cerr<<i<<" "<<submission_times[i]<<"\n";
+    //     std::cerr<<i<<" "<<submission_times[i]<<"\n";
     // }
     {
         std::unique_lock<std::mutex> lock(mtx);
@@ -251,7 +251,7 @@ void plagiarism_checker_t::handle_submission(){
         }
 
         // debugging
-        //std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
+        std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
         // --------------------------------------------------------
 
     }
@@ -259,7 +259,7 @@ void plagiarism_checker_t::handle_submission(){
 
 void plagiarism_checker_t:: add_submission(std::shared_ptr<submission_t> __submission)
 {
-    //std::cerr << "Called add submission on id " << __submission->id << std::endl;
+    std::cerr << "Called add submission on id " << __submission->id << std::endl;
 
     {
         std::unique_lock<std::mutex> lock(mtx);
@@ -269,7 +269,7 @@ void plagiarism_checker_t:: add_submission(std::shared_ptr<submission_t> __submi
 
     cv.notify_one();
 
-    // //std::cerr << "Called add submission on id " << __submission->id << std::endl;
+    // std::cerr << "Called add submission on id " << __submission->id << std::endl;
 
 
     // std::thread([this, __submission](){
@@ -305,7 +305,7 @@ void plagiarism_checker_t:: add_submission(std::shared_ptr<submission_t> __submi
     //     add_new_hash(hash15, map_15_hashes.size(), map_15_hashes);
 
     //     // debugging
-    //     //std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
+    //     std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
     //     }
     // }
     // ).detach();
