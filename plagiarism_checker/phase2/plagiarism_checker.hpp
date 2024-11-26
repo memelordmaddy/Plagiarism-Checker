@@ -48,6 +48,7 @@ protected:
     bool stop;
     std::condition_variable cv;
 
+    std::map<long, bool> flagged;
     void handle_submission();
     // End TODO
 };
