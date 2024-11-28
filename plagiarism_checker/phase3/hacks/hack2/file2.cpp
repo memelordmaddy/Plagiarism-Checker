@@ -1,13 +1,13 @@
 class Solution {
 public:
 
-    string findShortestSuffix(string & num, long long t, int suffix, vector<int> prime) {
+    string findShortestSuffix(string & num, long long t, long long int suffix, vector<long long int> prime) {
         long long product = 1;
         string val = "";
-        int isgreat = 0;
+        long long int isgreat = 0;
 
-        for(int i = 0; i < suffix; i ++) {
-            int digit = num[i] - '0';
+        for(long long int i = 0; i < suffix; i ++) {
+            long long int digit = num[i] - '0';
             if(digit == 0) {
                 digit = 1;
                 isgreat = 1;
@@ -16,7 +16,7 @@ public:
             val += digit + '0';
 
 
-            for(int j = 2; j <= 7; j ++) {
+            for(long long int j = 2; j <= 7; j ++) {
                 while(digit % j == 0 && t%j == 0) {
                     digit /= j;
                     t /= j;
@@ -29,18 +29,18 @@ public:
         }
 
         // cout << suffix << " " << t << " " << product << endl;
-        int start =(num[suffix] - '0');
+        long long int start =(num[suffix] - '0');
         if(isgreat) {
             start = 1;
         }
-        for(int i = max(1, start); i <= 9; i ++) {
+        for(long long int i = max(1, start); i <= 9; i ++) {
             // if I keep as i in suffix
-            int digit = i;
-            int g = __gcd(1LL*digit, t);
+            long long int digit = i;
+            long long int g = __gcd(1LL*digit, t);
             long long tt = t;
             tt /= g;
             string poss = "";
-            for(int i = 9; i >= 2 && tt > 1; i --) {
+            for(long long int i = 9; i >= 2 && tt > 1; i --) {
                 while(tt % i == 0) {
                     tt /= i;
                     poss += i + '0';
@@ -50,7 +50,7 @@ public:
             if(tt > 1) continue;
 
             
-            int required_ones = num.length() - suffix - (poss.length() + 1);
+            long long int required_ones = num.length() - suffix - (poss.length() + 1);
             required_ones = max(required_ones, 0);
 
             poss += string(required_ones, '1');
@@ -71,12 +71,12 @@ public:
     }
 
     string smallestNumber(string num, long long t) {
-        vector<int> prime(10);
-        vector<int> prime_copy(10);
+        vector<long long int> prime(10);
+        vector<long long int> prime_copy(10);
 
         string numm = num;
         long long tt = t;
-        for(int i = 2; i <= 7; i ++) {
+        for(long long int i = 2; i <= 7; i ++) {
             while(t % i == 0) {
                 t /= i;
                 prime[i] ++;
@@ -90,8 +90,8 @@ public:
         }
         
         long long product = 1;
-        int all9 = 1;
-        for(int i = 0; i< num.size(); i ++) {
+        long long int all9 = 1;
+        for(long long int i = 0; i< num.size(); i ++) {
             if(num[i] != '9') {
                 all9 = 0;
                 break;
@@ -101,8 +101,8 @@ public:
         
 
 
-        int end = num.size() - 1;
-        int till = num.length() - 50;
+        long long int end = num.size() - 1;
+        long long int till = num.length() - 50;
         till = max(till, 0);
         string possible = "";
         string an = "";
@@ -164,7 +164,7 @@ public:
         possible = "";
 
         cout << "came here " << tt << endl;
-        for(int i = 9; i >= 2 && tt > 1; i --) {
+        for(long long int i = 9; i >= 2 && tt > 1; i --) {
             while(tt % i == 0) {
                 tt /= i;
                 possible += i + '0';
