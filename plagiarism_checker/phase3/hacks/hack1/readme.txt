@@ -16,3 +16,5 @@ False negative
 Hacked: two, five
 
 Added a variable called junk and incremented it in every alternate line
+
+leetcode: https://leetcode.com/problems/smallest-divisible-digit-product-ii/
