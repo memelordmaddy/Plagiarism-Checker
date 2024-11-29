@@ -69,7 +69,7 @@ bool plagiarism_checker_t:: exact75_check(long current_submission_id, std::vecto
                     if(submission_id_to_ptr[previous_submission_id]->professor)
                         submission_id_to_ptr[previous_submission_id]->professor->flag_professor(submission_id_to_ptr[previous_submission_id]);
                 
-                    std::cerr << "Match of length 75 with previous submission id :" << previous_submission_id << std::endl;
+                    // std::cerr << "Match of length 75 with previous submission id :" << previous_submission_id << std::endl;
                 }
             }
 
@@ -79,7 +79,7 @@ bool plagiarism_checker_t:: exact75_check(long current_submission_id, std::vecto
             if(submission_id_to_ptr[current_submission_id]->professor)
                 submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
             
-            std::cerr << "Match of length 75 with submission id : " << current_submission_id << std::endl;
+            // std::cerr << "Match of length 75 with submission id : " << current_submission_id << std::endl;
             return true; 
         }
     }
@@ -107,7 +107,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                     submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
                 
                 // debugging
-                std::cerr << "Patchwork plag detected with id " << current_submission_id << std::endl;
+                // std::cerr << "Patchwork plag detected with id " << current_submission_id << std::endl;
                 
                 return true;
             }
@@ -129,7 +129,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                         if(submission_id_to_ptr[previous_submission_id]->professor)
                             submission_id_to_ptr[previous_submission_id]->professor->flag_professor(submission_id_to_ptr[previous_submission_id]);
 
-                        std::cerr << "Flagged previous submission for copies from same file " << previous_submission_id << std::endl;
+                        // std::cerr << "Flagged previous submission for copies from same file " << previous_submission_id << std::endl;
                     }
                     flagged[current_submission_id] = true;
                     if(submission_id_to_ptr[current_submission_id]->student)
@@ -137,7 +137,7 @@ bool plagiarism_checker_t:: exact15_check(long current_submission_id, std::vecto
                     if(submission_id_to_ptr[current_submission_id]->professor)
                         submission_id_to_ptr[current_submission_id]->professor->flag_professor(submission_id_to_ptr[current_submission_id]);
 
-                    std::cerr << "Flagged submission with id " << current_submission_id << " for copies from same file." << std::endl;
+                    // std::cerr << "Flagged submission with id " << current_submission_id << " for copies from same file." << std::endl;
                     return true;
                 }
             }
@@ -187,10 +187,6 @@ plagiarism_checker_t:: plagiarism_checker_t(std::vector<std::shared_ptr<submissi
 
 plagiarism_checker_t:: ~plagiarism_checker_t()
 {
-    // for(int i=0; i<submission_times.size(); i++)
-    // {
-    //     std::cerr<<i<<" "<<submission_times[i]<<"\n";
-    // }
     {
         std::unique_lock<std::mutex> lock(mtx);
         stop = true;
@@ -220,8 +216,6 @@ void plagiarism_checker_t::handle_submission(){
         // --------------------------------------------------------
         auto time_now = std::chrono::steady_clock::now();
         double submission_time  = std::chrono::duration_cast<std::chrono::milliseconds>(time_now - initial_time).count() / 1000.0;
-        // double submission_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-        // submission_time /= 1000.0; // to convert to seconds
         {
             std::unique_lock<std::mutex> lock(mtx);    
             submission_times[__submission->id] = submission_time;
@@ -251,7 +245,7 @@ void plagiarism_checker_t::handle_submission(){
         }
 
         // debugging
-        std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
+        // std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
         // --------------------------------------------------------
 
     }
@@ -259,7 +253,7 @@ void plagiarism_checker_t::handle_submission(){
 
 void plagiarism_checker_t:: add_submission(std::shared_ptr<submission_t> __submission)
 {
-    std::cerr << "Called add submission on id " << __submission->id << std::endl;
+    // std::cerr << "Called add submission on id " << __submission->id << std::endl;
 
     {
         std::unique_lock<std::mutex> lock(mtx);
@@ -268,45 +262,4 @@ void plagiarism_checker_t:: add_submission(std::shared_ptr<submission_t> __submi
     }
 
     cv.notify_one();
-
-    // std::cerr << "Called add submission on id " << __submission->id << std::endl;
-
-
-    // std::thread([this, __submission](){
-
-    //     {
-
-    //     // lock mutex to safely add the submission
-    //     std::unique_lock<std::mutex> lock(mtx);
-
-    //     double submission_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    //     submission_time /= 1000.0; // to convert to seconds
-
-    //     submission_times[__submission->id] = submission_time;
-    //     submission_id_to_ptr[__submission->id] = __submission;
-    //     // }
-
-    //     std::string code = __submission->codefile;
-    //     tokenizer_t tokenizer(code);
-    //     std::vector<int> tokens = tokenizer.get_tokens();
-    //     std::vector<long long int> hash75 = rolling_hash(tokens, 75);
-    //     std::vector<long long int> hash15 = rolling_hash(tokens, 15);
-        
-
-    //     bool caught_75 = exact75_check(__submission->id, hash75, map_75_hashes);
-    //     // check only if there was no match of length 75
-
-    //     if (caught_75 == false){
-    //         exact15_check(__submission->id, hash15, map_15_hashes);
-    //     }
-
-    //     // add the new file 
-    //     add_new_hash(hash75, map_75_hashes.size(), map_75_hashes);
-    //     add_new_hash(hash15, map_15_hashes.size(), map_15_hashes);
-
-    //     // debugging
-    //     std::cerr << "Received submission with id " << __submission->id << " at time " << submission_time << std::endl;
-    //     }
-    // }
-    // ).detach();
 }
