@@ -1,0 +1,15 @@
+._*
+
+plagiarism_checker/Dockerfile
+plagiarism_checker/phase1/main
+plagiarism_checker/phase2/main
+plagiarism_checker/phase2/output.txt
+
+plagiarism_checker/phase2/.vscode/
+plagiarism_checker/phase3/.vscode/
+
+plagiarism_checker/phase3/match_submissions.hpp
+plagiarism_checker/phase3/main
+
+plagiarism_checker/phase3/one.cpp
+plagiarism_checker/phase3/two.cpp
