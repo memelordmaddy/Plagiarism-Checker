@@ -1,6 +1,5 @@
 ._*
 
-plagiarism_checker/Dockerfile
 plagiarism_checker/phase1/main
 plagiarism_checker/phase2/main
 plagiarism_checker/phase2/output.txt
