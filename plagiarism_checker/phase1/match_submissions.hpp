@@ -349,7 +349,7 @@ std::vector<int> checkLarge(std::vector<int> v1, std::vector<int> v2)
 
             // look for temp[1] in shorter file (assume v1)
             int dist_start = 0;
-            for (int index = start1 + 1; index < end1; index++)
+            for (int index = start2 + 1; index < end2; index++)
             {
                 dist_start++;
                 if (v_long[index] == temp[1])
@@ -360,7 +360,7 @@ std::vector<int> checkLarge(std::vector<int> v1, std::vector<int> v2)
 
             int size = temp.size();
             int dist_end = 0;
-            for (int index = end1 - 1; index > start1; index--)
+            for (int index = end2 - 1; index > start2; index--)
             {
                 dist_end++;
                 if (v_long[index] == temp[size - 2])
@@ -477,9 +477,9 @@ std::array<int, 5> match_submissions(std::vector<int> &submission1,
     else
         result[0] = 0;
     result[1] = len_short_matches;
-    result[2] = (temp[0] >= 30) ? temp[0] : 0;
-    result[3] = (temp[0] >= 30) ? temp[1] : 0;
-    result[4] = (temp[0] >= 30) ? temp[2] : 0;
+    result[2] = temp[0];
+    result[3] = temp[2];
+    result[4] = temp[1];
 
     return result;
 }
