@@ -1,8 +1,8 @@
 CXX = clang++
 CXXWARNINGS = -Wall -Wshadow -Wuninitialized -Wtype-limits -Wno-unused-variable
 CXXFLAGS = -std=gnu++20 -g -fsanitize=address,undefined $(CXXWARNINGS)
-INCLUDEFLAGS = -I/opt/homebrew/opt/llvm/include
-LDFLAGS = -lclang -L/opt/homebrew/opt/llvm/lib -rpath /opt/homebrew/opt/llvm/lib
+INCLUDEFLAGS = -I/usr/lib/llvm-18/include
+LDFLAGS = -lclang -L/usr/lib/llvm-18/lib -rpath /usr/lib/llvm-18/lib -fuse-ld=lld
 
 main: main.cpp tokenizer.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDEFLAGS) $(LDFLAGS) $^ -o $@
