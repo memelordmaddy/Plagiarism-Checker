@@ -1,0 +1,39 @@
+Comparing saruman.cpp and gollum.cpp
+Time limit exceeded
+Comparing saruman.cpp and smeagol.cpp
+Time limit exceeded
+Comparing saruman.cpp and frodo.cpp
+Time limit exceeded
+Comparing saruman.cpp and aragorn.cpp
+Results:    0   25    4  632  185
+Expected:   0   30    0    0    0
+Comparing saruman.cpp and gandalf.cpp
+Results:    1 1702 1651    1  102
+Expected:   1 1690 1500  140    0
+Comparing gollum.cpp and smeagol.cpp
+Time limit exceeded
+Comparing gollum.cpp and frodo.cpp
+Results:    0    0    1  389  332
+Expected:   0    0   40  770 1070
+Comparing gollum.cpp and aragorn.cpp
+Results:    0    0    7  223  197
+Expected:   0    0   30  740   40
+Comparing gollum.cpp and gandalf.cpp
+Time limit exceeded
+Comparing smeagol.cpp and frodo.cpp
+Time limit exceeded
+Comparing smeagol.cpp and aragorn.cpp
+Results:    0    0    1  496  232
+Expected:   0    0   40 2440   60
+Comparing smeagol.cpp and gandalf.cpp
+Time limit exceeded
+Comparing frodo.cpp and aragorn.cpp
+Results:    0  101    3  420  225
+Expected:   2  100  110 1010    0
+Comparing frodo.cpp and gandalf.cpp
+Time limit exceeded
+Comparing aragorn.cpp and gandalf.cpp
+Results:    1  279    1  512  203
+Expected:   1  270  270    0 1500
+--------------------------------------
+Total score: 1.4
